@@ -45,7 +45,7 @@ app.post('/upload', (req, res) => {
     try {
       // First API Call: Analyze items in the image
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = "Analyze the provided image input and identify items, specifically only aluminum cans (label as Can), beer bottles (label Beer_Bottle), plastic bottles (label as Plastic_Bottle), and plastic milk jugs (label as Plastic_Jug). Return the detected items as a JSON list.";
+      const prompt = "Analyze the provided image input and identify items, specifically only aluminum cans (label as Can), beer bottles (label Beer_Bottle), plastic bottles (label as Plastic_Bottle), and plastic milk jugs (label as Plastic_Jug). Return the detected items as a JSON list, where each object in the list contains two keys: item_quantity, an integer value for the total number of the specific detected item, and item_type, a string representing the item's type (using one of the four labels: Can, Beer_Bottle, Plastic_Bottle, or Plastic_Jug). PLEASE DO NOT INCLUDE ```json ``` in these lines";
       const imageParts = [fileToGenerativePart(filePath, "image/png")];
       const result = await model.generateContent([prompt, ...imageParts]);
       const response = await result.response;
